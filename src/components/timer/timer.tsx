@@ -36,13 +36,13 @@ export const Timer = (): JSX.Element => {
         }
     };
 
-    const handleWork = () => {
+    const handlePomodoro = () => {
         setIsCounting(false);
         setIsWorking(false);
         setTimer(25 * 60);
     };
 
-    const handleRest = () => {
+    const handleBreak = () => {
         setIsCounting(false);
         setIsWorking(true);
         setTimer(5 * 60);
@@ -57,15 +57,15 @@ export const Timer = (): JSX.Element => {
             </div>
             <div>
                 {isCounting ? (
-                    <button onClick={handleStop}>Parar</button>
+                    <button onClick={handleStop}>Pausar</button>
                 ) : (
                     <button onClick={handleStart}>Começar</button>
                 )}
                 <button onClick={handleReset}>Resetar</button>
                 {isWorking ? (
-                    <button onClick={handleWork}>Trabalhar</button>
+                    <button onClick={handlePomodoro}>Pomodoro</button>
                 ) : (
-                    <button onClick={handleRest}>Descanço</button>
+                    <button onClick={handleBreak}>Intervalo</button>
                 )}
 
             </div>
