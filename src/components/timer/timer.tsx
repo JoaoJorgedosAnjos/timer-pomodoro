@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
 
 export const Timer = (): JSX.Element => {
-    const [totalTimeInSeconds, setTotalTimesInSeconds] = useState<number>(1 * 60);
-    const [isCounting, setIsCounting] = useState<boolean>(false);
+    const [timer, setTimer] = useState<number>(25 * 60);
 
-    const minutes: number = Math.floor(totalTimeInSeconds / 60);
-    const seconds: number = totalTimeInSeconds % 60;
+    const [isCounting, setIsCounting] = useState<boolean>(false);
+    const [isWorking, setIsWorking] = useState<boolean>(false);
+
+    const minutes: number = Math.floor(timer / 60);
+    const seconds: number = timer % 60;
 
     useEffect(() => {
-        if (totalTimeInSeconds === 0) {
+        if (timer === 0) {
             alert("O tempo acabou, faça uma pausa de 5 minutos")
             return;
         } else {
             isCounting &&
-            setTimeout(() => {
-                setTotalTimesInSeconds(totalTimeInSeconds - 1);
-            }, 1000);
+                setTimeout(() => {
+                    setTimer(timer - 1);
+                }, 1000);
         }
-    }, [totalTimeInSeconds, isCounting]);
+    }, [timer, isCounting]);
 
     const handleStart = () => {
         setIsCounting(true);
@@ -27,7 +29,23 @@ export const Timer = (): JSX.Element => {
     };
     const handleReset = () => {
         setIsCounting(false);
-        setTotalTimesInSeconds(5);
+        if(isWorking === false){
+            setTimer(25 * 60);
+        }else{
+            setTimer(5 * 60);
+        }
+    };
+
+    const handleWork = () => {
+        setIsCounting(false);
+        setIsWorking(false);
+        setTimer(25 * 60);
+    };
+
+    const handleRest = () => {
+        setIsCounting(false);
+        setIsWorking(true);
+        setTimer(5 * 60);
     };
 
     return (
@@ -39,11 +57,17 @@ export const Timer = (): JSX.Element => {
             </div>
             <div>
                 {isCounting ? (
-                    <button onClick={handleStop}>Stop</button>
+                    <button onClick={handleStop}>Parar</button>
                 ) : (
-                    <button onClick={handleStart}>Start</button>
+                    <button onClick={handleStart}>Começar</button>
                 )}
-                <button onClick={handleReset}>Reset</button>
+                <button onClick={handleReset}>Resetar</button>
+                {isWorking ? (
+                    <button onClick={handleWork}>Trabalhar</button>
+                ) : (
+                    <button onClick={handleRest}>Descanço</button>
+                )}
+
             </div>
         </>
     );
